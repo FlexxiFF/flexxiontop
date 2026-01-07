@@ -256,7 +256,7 @@ const App: React.FC = () => {
       <footer className="relative z-10 mt-auto pb-10 pt-20 text-center">
         <div className="inline-block relative py-2 px-8">
           <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-          <p className="text-slate-600 font-mono text-[9px] tracking-[0.5em] uppercase">NOVA ARCHIVE V2.5.1</p>
+          <p className="text-slate-600 font-mono text-[9px] tracking-[0.5em] uppercase">Flexxi V.0</p>
         </div>
         <div className="mt-4 flex justify-center">
           <button 
