@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Links | Hyper-Modern Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(3, 7, 18, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-blue: #00f3ff;
+            --neon-purple: #bc00ff;
+            --hologram-cyan: rgba(0, 243, 255, 0.1);
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #010409;
+            color: #f8fafc;
+            margin: 0;
+            overflow-x: hidden;
+            cursor: default;
+        }
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--glass-border);
+        }
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-purple);
+        }
+        
+        /* Holographic Scanline Effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(18, 16, 16, 0) 50%,
+                rgba(0, 0, 0, 0.25) 50%
+            ),
+            linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.06),
+                rgba(0, 255, 0, 0.02),
+                rgba(0, 0, 255, 0.06)
+            );
+            background-size: 100% 4px, 3px 100%;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        .hologram-grid {
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scan-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 20vh;
+            background: linear-gradient(to bottom, transparent, var(--hologram-cyan), transparent);
+            opacity: 0.1;
+            z-index: 10;
+            pointer-events: none;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes glitch {
+            0% { clip-path: inset(40% 0 61% 0); transform: translate(-5px, 0); }
+            20% { clip-path: inset(92% 0 1% 0); transform: translate(5px, 0); }
+            40% { clip-path: inset(43% 0 1% 0); transform: translate(-5px, 0); }
+            60% { clip-path: inset(25% 0 58% 0); transform: translate(5px, 0); }
+            80% { clip-path: inset(54% 0 7% 0); transform: translate(-5px, 0); }
+            100% { clip-path: inset(58% 0 43% 0); transform: translate(5px, 0); }
+        }
+
+        .glitch-hover:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both;
+            color: var(--neon-blue);
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #010409; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 20px; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react/": "https://esm.sh/react@19.0.0/",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+    "framer-motion": "https://esm.sh/framer-motion@11.11.17?external=react,react-dom",
+    "@google/genai": "https://esm.sh/@google/genai@1.34.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="scan-bar"></div>
+    <div id="root"></div>
+    
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        
+        // Add Firebase products
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
+        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics.js';
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAzaYOpxDgYiWDNAnQD_12gWyw5NL5zUbM",
+          authDomain: "clonexbazar.firebaseapp.com",
+          databaseURL: "https://clonexbazar-default-rtdb.firebaseio.com",
+          projectId: "clonexbazar",
+          storageBucket: "clonexbazar.firebasestorage.app",
+          messagingSenderId: "5709022516",
+          appId: "1:5709022516:web:a6a0e1d8297f1b23a51161",
+          measurementId: "G-4SZKG5G3B5"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const analytics = getAnalytics(app);
+        
+        // Make Firebase available globally so we can use it in our React app
+        window.firebase = {
+            auth,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged
+        };
+    </script>
+    
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
