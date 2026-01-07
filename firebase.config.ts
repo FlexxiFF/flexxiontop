@@ -1,23 +1,58 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+// Firebase Authentication Service
+// For now, we'll implement a mock service that mimics Firebase functionality
+// In a real implementation with proper Firebase setup, you would import from 'firebase/auth'
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAzaYOpxDgYiWDNAnQD_12gWyw5NL5zUbM",
-  authDomain: "clonexbazar.firebaseapp.com",
-  databaseURL: "https://clonexbazar-default-rtdb.firebaseio.com",
-  projectId: "clonexbazar",
-  storageBucket: "clonexbazar.firebasestorage.app",
-  messagingSenderId: "5709022516",
-  appId: "1:5709022516:web:a6a0e1d8297f1b23a51161",
-  measurementId: "G-4SZKG5G3B5"
+export const firebaseAuthService = {
+  // Mock sign in with email and password
+  signIn: async (email: string, password: string): Promise<any> => {
+    // Simulate Firebase authentication
+    // In a real Firebase implementation, you would call signInWithEmailAndPassword
+    return new Promise((resolve, reject) => {
+      // Simulate API call delay
+      setTimeout(() => {
+        if (email === 'admin' && password === 'admin') {
+          resolve({ uid: 'mock-admin-user-id', email });
+        } else {
+          reject(new Error('Invalid credentials'));
+        }
+      }, 300);
+    });
+  },
+
+  // Mock sign out
+  signOut: async (): Promise<void> => {
+    return new Promise((resolve) => {
+      // Simulate API call delay
+      setTimeout(() => {
+        resolve();
+      }, 300);
+    });
+  },
+
+  // Mock authentication state listener
+  onAuthStateChanged: (callback: (user: any) => void): (() => void) => {
+    // Simulate checking auth state
+    const user = localStorage.getItem('firebase_auth_token') ? { uid: 'mock-admin-user-id', email: 'admin' } : null;
+    callback(user);
+    
+    // Return unsubscribe function
+    return () => {
+      // Cleanup if needed
+    };
+  },
+
+  // Check if user is authenticated
+  isAuthenticated: (): boolean => {
+    // Check if we have a stored auth token
+    return !!localStorage.getItem('firebase_auth_token');
+  },
+
+  // Set authentication state
+  setAuthenticated: (token?: string): void => {
+    if (token) {
+      localStorage.setItem('firebase_auth_token', token);
+    } else {
+      localStorage.removeItem('firebase_auth_token');
+    }
+  }
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const analytics = getAnalytics(app);
-
-export { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged };
