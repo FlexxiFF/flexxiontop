@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import AnimatedBackground from './components/AnimatedBackground';
-import SocialLinkCard from './components/SocialLinkCard';
-import AdminPanel from './components/AdminPanel';
-import { DEFAULT_LINKS, ICONS } from './constants';
-import { UserProfile, SocialLink, ViewState } from './types';
-import { generateAIBio } from './services/geminiService';
-import { firebaseAuthService } from './services/firebaseAuthService';
+import AnimatedBackground from './components/AnimatedBackground.tsx';
+import SocialLinkCard from './components/SocialLinkCard.tsx';
+import AdminPanel from './components/AdminPanel.tsx';
+import { DEFAULT_LINKS, ICONS } from './constants.tsx';
+import { UserProfile, SocialLink, ViewState } from './types.ts';
+import { generateAIBio } from './services/geminiService.ts';
+import { firebaseAuthService } from './services/firebaseAuthService.ts';
 
 const App: React.FC = () => {
   // Persistence Logic
