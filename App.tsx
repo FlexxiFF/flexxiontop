@@ -15,7 +15,7 @@ const App: React.FC = () => {
     return saved ? JSON.parse(saved) : {
       name: 'XAVIER NOVA',
       username: 'SYSTEM_ARCHIVE_0X1',
-      bio: 'SYTHESIZING DIGITAL DIMENSIONS THROUGH HIGH-FIDELITY ARCHIVECTURE.',
+      bio: 'SYTHESIZING DIGITAL DIMENSIONS THROUGH HIGH-FIDELITY ARCHITECTURE.',
       avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=400&h=400'
     };
   };
@@ -81,22 +81,18 @@ const App: React.FC = () => {
     e.preventDefault();
     
     try {
-      // Use default admin credentials for Firebase authentication
-      // In a real implementation, you would use actual Firebase users
-      // For now, we'll simulate authentication with a known admin user
-      if (adminId === 'admin' && adminPass === 'admin') {
-        setView('admin');
-        setLoginError(false);
-        window.history.pushState({}, '', '/admin');
-        // Clear form fields after successful login
-        setAdminId('');
-        setAdminPass('');
-        // Store auth state
-        firebaseAuthService.setAuthenticated('admin-token');
-      } else {
-        setLoginError(true);
-        setTimeout(() => setLoginError(false), 2000);
-      }
+      // Use the Firebase auth service to sign in
+      // The mock service checks for 'admin'/'admin' credentials
+      await firebaseAuthService.signIn(adminId, adminPass);
+      
+      setView('admin');
+      setLoginError(false);
+      window.history.pushState({}, '', '/admin');
+      // Clear form fields after successful login
+      setAdminId('');
+      setAdminPass('');
+      // Store auth state
+      firebaseAuthService.setAuthenticated('admin-token');
     } catch (error) {
       console.error('Login error:', error);
       setLoginError(true);
@@ -256,7 +252,7 @@ const App: React.FC = () => {
       <footer className="relative z-10 mt-auto pb-10 pt-20 text-center">
         <div className="inline-block relative py-2 px-8">
           <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-          <p className="text-slate-600 font-mono text-[9px] tracking-[0.5em] uppercase">Flexxi V.0</p>
+          <p className="text-slate-600 font-mono text-[9px] tracking-[0.5em] uppercase">NOVA ARCHIVE V2.5.1</p>
         </div>
         <div className="mt-4 flex justify-center">
           <button 
@@ -270,7 +266,7 @@ const App: React.FC = () => {
             }}
             className="text-[8px] font-mono text-cyan-500/30 hover:text-cyan-500/80 transition-all tracking-[0.2em]"
           >
-            {view === 'admin' ? '[DISCONNECT_UPLINK]' : 'Ask your dad who is flexxi.'}
+            {view === 'admin' ? '[DISCONNECT_UPLINK]' : '[REQUEST_ADMIN_UPLINK]'}
           </button>
         </div>
       </footer>
