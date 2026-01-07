@@ -270,7 +270,7 @@ const App: React.FC = () => {
             }}
             className="text-[8px] font-mono text-cyan-500/30 hover:text-cyan-500/80 transition-all tracking-[0.2em]"
           >
-            {view === 'admin' ? '[DISCONNECT_UPLINK]' : '[REQUEST_ADMIN_UPLINK]'}
+            {view === 'admin' ? '[DISCONNECT_UPLINK]' : 'Ask your dad who is flexxi.'}
           </button>
         </div>
       </footer>
